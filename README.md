@@ -164,7 +164,7 @@
       ## Filebeat
 
       - `ssh username@jump_box_public_IP_address`
-      - Locate conatiner id `sudo docker container list -a`
+      - Locate container id `sudo docker container list -a`
 
         **558***********
 
@@ -180,15 +180,15 @@
       - Select **DEB** under **Gettings Started** 
       - Run commands, 
 
-        `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/  filebeat-7.6.1-amd64.deb`
+        - `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/  filebeat-7.6.1-amd64.deb`
         
-        `dpkg -i filebeat-7.6.1-amd64.deb`
+        - `dpkg -i filebeat-7.6.1-amd64.deb`
 
       - `nano /etc/filebeat/filebeat.yml`
 
         **Lines #1106 and #1806 replace the IP address with Elk server private IP**
 
-        [config](Ansible/filebeat-config.yml)
+        [configurations](Ansible/filebeat-config.yml)
 
       - `cp filebeat.yml /etc/ansible/files/filebeat-config.yml` 
       - [`nano /etc/ansible/roles/filebeat-playbook.yml`](Ansible/filebeat-playbook.yml)
@@ -196,7 +196,9 @@
         - `filebeat modules enable system`
         - `filebeat setup`
         - `service filebeat start`
-      - run playbook `ansible-playbook /etc/ansible/roles/filebeat-playbook.yml`
+      - Run playbook,
+      
+       `ansible-playbook /etc/ansible/roles/filebeat-playbook.yml`
 
       ## Metricbeat
 
@@ -204,13 +206,13 @@
       - Select **DEB** under **Gettings Started** 
       - Run Commamnds,
 
-       `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
+       - `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
        
-       `dpkg -i metricbeat-7.6.1-amd64.deb`
+       - `dpkg -i metricbeat-7.6.1-amd64.deb`
 
       - `nano /etc/metricbeat/metricbeat.yml`
 
-      [config](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
+      [configurations](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
 
       - `cp metricbeat.yml /etc/ansible/files/metricbeat-config.yml` 
       - [`nano /etc/ansible/roles/metricbeat-playbook.yml`](Ansible/metricbeat-playbook.yml)
@@ -218,7 +220,9 @@
         - `metricbeat modules enable docker`
         - `metricbeat setup`
         - `service metricbeat start`
-      - run playbook `ansible-playbook /etc/ansible/roles/metricbeat-playbook.yml`
+      - Run playbook
+      
+       `ansible-playbook /etc/ansible/roles/metricbeat-playbook.yml`
 
 
 
