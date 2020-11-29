@@ -1,0 +1,6 @@
+nano auditd.conf
+
+Set number of retained logs and maximum log file size
+
+max_log_file = 35
+    num_logs = 7
