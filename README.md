@@ -37,7 +37,7 @@
 
   - **What is the advantage of a jump box?**
 
-      Accessing other machines that are not exposed to the public internet securly. Utilizing it to jump from machine to machine in order to conduct admistrative tasks.
+      Accessing other machines that are not exposed to the public internet securely. Utilizing it to jump from machine to machine to conduct administrative tasks.
 
 - Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the network
   and system logs.
@@ -83,8 +83,8 @@
 
 ### Elk Configuration
 
-- Ansible was used to automate configuration of the ELK machine. No configuration was performed manually
-  which is advantageous because provisions can be applied to multiple servers within a few minutes.
+- Ansible was used to automate the configuration of the ELK machine. No configuration was performed
+  manually which is advantageous because provisions can be applied to multiple servers within a few minutes.
 
 - The playbook implements the following tasks:
 
@@ -114,20 +114,20 @@
 
 - These Beats allow us to collect the following information from each machine:
 
-    - Filebeat collects log events. For example, System logs which tracks sudo commands, SSH logins, New users and groups, etc.
+    - Filebeat collects log events. For example, System logs that track sudo commands, SSH logins, New users and groups, etc.
 
-    - Metricbeat fetches metrics. For example, Docker conatiners which will show metrics on Number of Containers, CPU and Memory usage, etc.
+    - Metricbeat fetches metrics. For example, Docker containers will show metrics on the Number of Containers, CPU and Memory usage, etc.
 
 ### Using the Playbook
 
-- In order to use the playbook, you will need to have an Ansible control node already configured. Assuming
+- To use the playbook, you will need to have an Ansible control node already configured. Assuming
   you have such a control node provisioned: 
 
     - SSH into the control node and follow the steps below:
 
       - Copy the **filebeat-config.yml** and **metricbeat-config.yml** files to `/etc/ansible/files`
       - Update the **filebeat-config.yml** and **metricbeat-config.yml** with **Elk server private IP**
-      - Run the playbooks, to check that the installation worked as expected navigate to,  
+      - Run the playbooks. To check that the installation worked, navigate to,    
       
       ![Beats success](https://github.com/aimeepete/Project-1/blob/main/Images/Filebeat%20success.png) 
 
@@ -170,7 +170,7 @@
 
       - `sudo docker start 558`
 
-        **using first 3 characters from conatiner id will work**
+        **using first 3 characters from container id will work**
 
       - `sudo docker attach 558`
 
