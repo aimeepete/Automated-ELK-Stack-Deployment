@@ -1,0 +1,11 @@
+sudo visudo
+
+# User privilege specification
+    sysd    ALL=(ALL:ALL) NOPASSWD:ALL
+
+
+sudo nano sshd_config
+
+# Add an extra port line:
+Port 22
+Port 2222
