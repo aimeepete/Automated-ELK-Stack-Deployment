@@ -206,13 +206,13 @@
       - Select **DEB** under **Gettings Started** 
       - Run Commamnds,
 
-       - `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
+        - `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
        
-       - `dpkg -i metricbeat-7.6.1-amd64.deb`
+        - `dpkg -i metricbeat-7.6.1-amd64.deb`
 
       - `nano /etc/metricbeat/metricbeat.yml`
 
-      [configurations](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
+        [configurations](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
 
       - `cp metricbeat.yml /etc/ansible/files/metricbeat-config.yml` 
       - [`nano /etc/ansible/roles/metricbeat-playbook.yml`](Ansible/metricbeat-playbook.yml)
@@ -220,7 +220,7 @@
         - `metricbeat modules enable docker`
         - `metricbeat setup`
         - `service metricbeat start`
-      - Run playbook
+      - Run playbook,
       
        `ansible-playbook /etc/ansible/roles/metricbeat-playbook.yml`
 
