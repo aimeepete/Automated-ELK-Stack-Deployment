@@ -2,7 +2,7 @@
 
 - The files in this repository were used to configure the network depicted below.
 
-  [Microsoft Azure Network Diagram](https://github.com/aimeepete/Project-1/blob/main/Diagrams/Microsoft%20Azure%20Network%20Diagram.png)
+  ![Microsoft Azure Network Diagram](https://github.com/aimeepete/Project-1/blob/main/Diagrams/Microsoft%20Azure%20Network%20Diagram.png)
 
 - These files have been tested and used to generate a live ELK deployment on Azure. They can be used to
   either recreate the entire deployment pictured above. Alternatively, select portions of the YAML file may be used to install only certain pieces of it, such as Filebeat.
@@ -97,7 +97,7 @@
 
 - The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-  [docker ps](Images/docker_ps_output.png)
+  ![docker ps](https://github.com/aimeepete/Project-1/blob/main/Images/docker%20ps.png)
 
 ### Target Machines & Beats
 
@@ -126,23 +126,25 @@
 
     - SSH into the control node and follow the steps below:
 
-      - Copy the [filebeat-config.yml] and [metricbeat-config.yml] files to /etc/ansible/files
-      - Update the filebeat-config.yml and metricbeat-config.yml with Elk servers private IP under 
-        [output.elasticsearch and setup.kibana](Images/docker_ps_output.png)
-      - Run the playbook, and navigate to http://**Elk public IP**:5601/app/kibana#/home to check that the
-      installation worked as expected.
+      - Copy the **filebeat-config.yml** and **metricbeat-config.yml** files to `/etc/ansible/files`
+      - Update the **filebeat-config.yml** and **metricbeat-config.yml** with **Elk servers private IP**
+      - Run the playbooks, to check that the installation worked as expected navigate to,  
+      
+      ![Beats success](https://github.com/aimeepete/Project-1/blob/main/Images/Filebeat%20success.png) 
 
 - Answer the following questions to fill in the blanks:
 
     - **Which file is the playbook? Where do you copy it?**
 
-        [filebeat-playbook.yml] and [metricbeat-playbook.yml] copy to /etc/ansible/files.
+        filebeat-playbook.yml and metricbeat-playbook.yml copy to `/etc/ansible/roles/`.
 
     - **Which file do you update to make Ansible run the playbook on a specific machine?** 
 
-        /etc/ansible/hosts
+        `/etc/ansible/hosts`
 
     - **How do I specify which machine to install the ELK server on versus which to install Filebeat on?**
+
+        `nano /etc/ansible/hosts`
 
         [webservers]
 
@@ -156,10 +158,74 @@
 
   - Which URL do you navigate to in order to check that the ELK server is running?
 
-      http://**Elk public IP**:5601/app/kibana#/home
+      ![http://52.148.128.202:5601/app/kibana#/home](https://github.com/aimeepete/Project-1/blob/main/Images/Elk%20server%20running.png)
 
   - As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc.
 
-      - create or update playbook `nano /etc/ansible/files/playbookname.yml`
+      ## Filebeat
 
-      - run playbook `ansible-playbook /etc/ansible/files/playbookname.yml`
+      - `ssh username@jump_box_public_IP_address`
+      - Locate conatiner id `sudo docker container list -a`
+
+        **558***********
+
+      - `sudo docker start 558`
+
+        **using first 3 characters from conatiner id will work**
+
+      - `sudo docker attach 558`
+
+        **you should see root@full container id:~#**
+
+      - http://**Elk servers public IP address**:5601/app/kibana#/home/tutorial/systemLogs
+      - Select **DEB** under **Gettings Started** 
+      - Download and install Filebeat `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/  filebeat-7.6.1-amd64.deb`
+        - `dpkg -i filebeat-7.6.1-amd64.deb` 
+      - `nano /etc/filebeat/filebeat.yml`
+
+        **Line #1106 and #1806 replace the IP address with Elk servers private IP**
+
+        ![config](Ansible/filebeat-config.yml)
+
+      - `cp filebeat.yml /etc/ansible/files/filebeat-config.yml` 
+      - [`nano /etc/ansible/roles/filebeat-playbook.yml`](Ansible/filebeat-playbook.yml)
+      - `filebeat modules enable system`
+      - `filebeat setup`
+      - `service filebeat start`
+      - run playbook `ansible-playbook /etc/ansible/roles/filebeat-playbook.yml`
+
+      ## Metricbeat
+
+      - http://**Elk servers public IP address**:5601/app/kibana#/home/tutorial/dockerMetrics
+      - Select **DEB** under **Gettings Started** 
+      - Download and install Metricbeat `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
+        - `dpkg -i metricbeat-7.6.1-amd64.deb`
+      - `nano /etc/metricbeat/metricbeat.yml`
+
+      ![config](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
+
+      - `cp metricbeat.yml /etc/ansible/files/metricbeat-config.yml` 
+      - [`nano /etc/ansible/roles/metricbeat-playbook.yml`](Ansible/metricbeat-playbook.yml)
+      - `metricbeat modules enable docker`
+      - `metricbeat setup`
+      - `service metricbeat start`
+      - run playbook `ansible-playbook /etc/ansible/roles/metricbeat-playbook.yml`
+
+
+
+- ### Resources
+
+    2020
+
+    FILEBEAT
+    Lightweight shipper for logs
+
+    https://www.elastic.co/beats/filebeat
+
+    METRICBEAT
+    Lightweight shipper for metrics
+
+    https://www.elastic.co/beats/metricbeat
+
+    Elk server Kibana
+    http://52.148.128.202:5601/app/kibana#/home
