@@ -4,8 +4,7 @@
 
   ![Microsoft Azure Network Diagram](https://github.com/aimeepete/Project-1/blob/main/Diagrams/Microsoft%20Azure%20Network%20Diagram.png)
 
-- These files have been tested and used to generate a live ELK deployment on Azure. They can be used to
-  either recreate the entire deployment pictured above. Alternatively, select portions of the YAML file may be used to install only certain pieces of it, such as Filebeat.
+- These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the YAML file may be used to install only certain pieces of it, such as Filebeat.
 
   [pentest.yml](Ansible/pentest.yml)
 
@@ -127,7 +126,7 @@
     - SSH into the control node and follow the steps below:
 
       - Copy the **filebeat-config.yml** and **metricbeat-config.yml** files to `/etc/ansible/files`
-      - Update the **filebeat-config.yml** and **metricbeat-config.yml** with **Elk servers private IP**
+      - Update the **filebeat-config.yml** and **metricbeat-config.yml** with **Elk server private IP**
       - Run the playbooks, to check that the installation worked as expected navigate to,  
       
       ![Beats success](https://github.com/aimeepete/Project-1/blob/main/Images/Filebeat%20success.png) 
@@ -177,38 +176,48 @@
 
         **you should see root@full container id:~#**
 
-      - http://**Elk servers public IP address**:5601/app/kibana#/home/tutorial/systemLogs
+      - http://**Elk server public IP address**:5601/app/kibana#/home/tutorial/systemLogs
       - Select **DEB** under **Gettings Started** 
-      - Download and install Filebeat `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/  filebeat-7.6.1-amd64.deb`
-        - `dpkg -i filebeat-7.6.1-amd64.deb` 
+      - Run commands, 
+
+        `curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/  filebeat-7.6.1-amd64.deb`
+        
+        `dpkg -i filebeat-7.6.1-amd64.deb`
+
       - `nano /etc/filebeat/filebeat.yml`
 
-        **Line #1106 and #1806 replace the IP address with Elk servers private IP**
+        **Lines #1106 and #1806 replace the IP address with Elk server private IP**
 
-        ![config](Ansible/filebeat-config.yml)
+        [config](Ansible/filebeat-config.yml)
 
       - `cp filebeat.yml /etc/ansible/files/filebeat-config.yml` 
       - [`nano /etc/ansible/roles/filebeat-playbook.yml`](Ansible/filebeat-playbook.yml)
-      - `filebeat modules enable system`
-      - `filebeat setup`
-      - `service filebeat start`
+      - Run commands,
+        - `filebeat modules enable system`
+        - `filebeat setup`
+        - `service filebeat start`
       - run playbook `ansible-playbook /etc/ansible/roles/filebeat-playbook.yml`
 
       ## Metricbeat
 
-      - http://**Elk servers public IP address**:5601/app/kibana#/home/tutorial/dockerMetrics
+      - http://**Elk server public IP address**:5601/app/kibana#/home/tutorial/dockerMetrics
       - Select **DEB** under **Gettings Started** 
-      - Download and install Metricbeat `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
-        - `dpkg -i metricbeat-7.6.1-amd64.deb`
+      - Run Commamnds,
+
+       `curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.6.1-amd64.deb`
+       
+       `dpkg -i metricbeat-7.6.1-amd64.deb`
+
       - `nano /etc/metricbeat/metricbeat.yml`
 
-      ![config](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
+      [config](https://github.com/aimeepete/Project-1/blob/main/Ansible/metricbeat-config.yml)
 
       - `cp metricbeat.yml /etc/ansible/files/metricbeat-config.yml` 
       - [`nano /etc/ansible/roles/metricbeat-playbook.yml`](Ansible/metricbeat-playbook.yml)
-      - `metricbeat modules enable docker`
-      - `metricbeat setup`
-      - `service metricbeat start`
+      - Run Commands,
+        - `metricbeat modules enable docker`
+        - `metricbeat setup`
+        - `service metricbeat start`
       - run playbook `ansible-playbook /etc/ansible/roles/metricbeat-playbook.yml`
 
 
